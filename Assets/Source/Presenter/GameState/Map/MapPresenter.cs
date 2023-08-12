@@ -1,17 +1,20 @@
 using Model.GameStateLogic.MapLogic;
 
-public class MapPresenter
+namespace Presenter.GameStatePresenter.MapPresenter
 {
-    private Map _map;
-
-    public MapPresenter(Map map)
+    public class MapPresenter
     {
-        _map = map;
-    }
+        private Map _map;
 
-    public void ChangeState(int x, int y)
-    {
-        MapTile tile = _map[x, y];
-        tile.State = ! tile.State;
+        public MapPresenter(Map map)
+        {
+            _map = map;
+        }
+
+        public void ChangeState(int x, int y)
+        {
+            MapTile tile = _map[x, y];
+            tile.State = ! tile.State;
+        }
     }
 }

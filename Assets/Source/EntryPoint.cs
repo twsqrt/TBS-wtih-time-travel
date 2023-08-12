@@ -2,6 +2,7 @@ using UnityEngine;
 using Config;
 using Model.GameStateLogic.MapLogic;
 using View.GameStateView.MapView;
+using Presenter.GameStatePresenter.MapPresenter;
 
 public class EntryPoint : MonoBehaviour
 {

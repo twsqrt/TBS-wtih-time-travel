@@ -1,5 +1,6 @@
 using UnityEngine;
 using Model.GameStateLogic.MapLogic;
+using View.AgrumentSelectorView;
 
 namespace View.GameStateView.MapView
 {
@@ -8,6 +9,9 @@ namespace View.GameStateView.MapView
         [SerializeField] private Color _trueStateColor;
         [SerializeField] private Color _falseStateColor;
         [SerializeField] private MeshRenderer _render;
+        [SerializeField] private Highlighter _highlighter;
+
+        public Highlighter Highlighter => _highlighter;
 
         public void Init(MapTile tile)
         {
@@ -18,7 +22,6 @@ namespace View.GameStateView.MapView
         {
             Color newColor = state ? _trueStateColor : _falseStateColor;
             _render.material.SetColor("_Color", newColor);
-            //Debug.Log("view update");
         }
     }
 }
