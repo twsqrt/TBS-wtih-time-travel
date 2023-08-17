@@ -1,4 +1,4 @@
-namespace StateMachineLogic
+namespace StateMachineLogic.Builder
 {
     public interface IStateMachineBuilder
     {

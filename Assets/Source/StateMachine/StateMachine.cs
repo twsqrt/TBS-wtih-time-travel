@@ -1,9 +1,7 @@
 using System;
 using System.Linq;
-using System.Collections.Immutable;
 using System.Collections.Generic;
-using System.Transactions;
-using UnityEditor.ShaderKeywordFilter;
+using Unity.VisualScripting;
 
 namespace StateMachineLogic
 {
@@ -14,8 +12,13 @@ namespace StateMachineLogic
         private readonly IEnumerable<IState> _ends;
 
         private IState _current;
+        private bool _isComleted;
 
         public IState Current => _current;
+        public bool IsCompleted => _isComleted;
+
+
+        public event Action<IState> OnComplition;
 
         public StateMachine(IState start, IEnumerable<IState> ends, Dictionary<IState, ITransition> transitions)
         {
@@ -23,7 +26,13 @@ namespace StateMachineLogic
             _ends = ends;
             _transitions = transitions;
 
+            Reset();
+        }
+
+        private void Reset()
+        {
             _current = null;
+            _isComleted = false;
         }
 
         public void Enter()
@@ -34,11 +43,21 @@ namespace StateMachineLogic
 
         public bool TryNext()
         {
+            if(_isComleted)
+                return false;
+
             if(_transitions[_current].TryTransition(out IState next))
             {
                 _current.Exit();
                 _current = next;
                 next.Enter();
+
+                if(_ends.Contains(next))
+                {
+                    OnComplition?.Invoke(next);
+                    _isComleted = true;
+                }
+
                 return true;
             }
 
@@ -48,7 +67,7 @@ namespace StateMachineLogic
         public void Exit()
         {
             _current?.Exit();
-            _current = null;
+            Reset();
         }
     }
 }
