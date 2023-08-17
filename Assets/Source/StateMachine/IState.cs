@@ -1,8 +1,9 @@
-namespace StateMachine
+namespace StateMachineLogic
 {
     public interface IState 
     {
-        void Enter();
-        void Exit();
+        public abstract void Enter();
+
+        public abstract void Exit();
     }
 }
